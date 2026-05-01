@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Safety Data Sheets | Geiger Brothers</title>
+  <style>
+    /* ── Reset & base ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; scroll-behavior: smooth; }
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: #f4f4f4;
+      color: #222;
+      min-height: 100vh;
+    }
+    a { color: inherit; text-decoration: none; }
+
+    /* ── Brand colours ── */
+    :root {
+      --red:        #c8102e;
+      --red-dark:   #a00c24;
+      --navy:       #1b2a4a;
+      --navy-light: #243659;
+      --white:      #ffffff;
+      --light-gray: #f4f4f4;
+      --mid-gray:   #e0e0e0;
+      --text-muted: #555;
+    }
+
+    /* ── Top bar ── */
+    .topbar {
+      background: var(--navy);
+      color: var(--white);
+      font-size: 0.78rem;
+      padding: 0.35rem 1.5rem;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .topbar a { color: #adc4e8; }
+    .topbar a:hover { color: var(--white); }
+
+    /* ── Header / Hero ── */
+    header {
+      background: var(--red);
+      color: var(--white);
+      padding: 1.1rem 2rem 1.1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .header-brand {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .logo-box {
+      background: var(--white);
+      border-radius: 6px;
+      padding: 0.45rem 0.9rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      line-height: 1.1;
+    }
+    .logo-box .logo-top {
+      font-size: 1.35rem;
+      font-weight: 900;
+      color: var(--red);
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+    }
+    .logo-box .logo-bottom {
+      font-size: 0.55rem;
+      font-weight: 700;
+      color: var(--navy);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+    .header-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+    }
+    .header-subtitle {
+      font-size: 0.85rem;
+      opacity: 0.88;
+      margin-top: 0.15rem;
+    }
+
+    /* ── Hero banner ── */
+    .hero {
+      background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+      color: var(--white);
+      padding: 2.5rem 2rem;
+      text-align: center;
+    }
+    .hero h1 {
+      font-size: 2rem;
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+    }
+    .hero p {
+      font-size: 1rem;
+      opacity: 0.85;
+      max-width: 560px;
+      margin: 0 auto 1.6rem;
+    }
+
+    /* ── Search ── */
+    .search-wrap {
+      display: flex;
+      max-width: 520px;
+      margin: 0 auto;
+      border-radius: 40px;
+      overflow: hidden;
+      box-shadow: 0 3px 12px rgba(0,0,0,0.35);
+    }
+    #sds-search {
+      flex: 1;
+      border: none;
+      outline: none;
+      padding: 0.75rem 1.25rem;
+      font-size: 1rem;
+      color: #222;
+    }
+    .search-btn {
+      background: var(--red);
+      border: none;
+      cursor: pointer;
+      padding: 0 1.3rem;
+      display: flex;
+      align-items: center;
+      transition: background 0.2s;
+    }
+    .search-btn:hover { background: var(--red-dark); }
+    .search-btn svg { fill: var(--white); width: 20px; height: 20px; }
+
+    /* ── Main content ── */
+    main { max-width: 1100px; margin: 0 auto; padding: 2rem 1rem 3rem; }
+
+    /* ── Stats row ── */
+    .stats {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+    .stat-card {
+      background: var(--white);
+      border-left: 4px solid var(--red);
+      border-radius: 6px;
+      padding: 0.9rem 1.4rem;
+      flex: 1;
+      min-width: 130px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+    }
+    .stat-card .stat-num {
+      font-size: 1.7rem;
+      font-weight: 800;
+      color: var(--red);
+      line-height: 1;
+    }
+    .stat-card .stat-label {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-top: 0.2rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    /* ── Section heading ── */
+    .section-heading {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--red);
+    }
+    .section-heading .dot {
+      width: 10px; height: 10px;
+      background: var(--red);
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* ── SDS grid ── */
+    .sds-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2.5rem;
+    }
+
+    /* ── SDS card ── */
+    .sds-card {
+      background: var(--white);
+      border-radius: 8px;
+      box-shadow: 0 1px 5px rgba(0,0,0,0.09);
+      overflow: hidden;
+      transition: transform 0.18s, box-shadow 0.18s;
+      display: flex;
+      flex-direction: column;
+    }
+    .sds-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.14);
+    }
+    .sds-card-header {
+      background: var(--navy);
+      color: var(--white);
+      padding: 0.7rem 1rem;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .sds-card-header .badge {
+      background: var(--red);
+      border-radius: 3px;
+      padding: 0.1rem 0.45rem;
+      font-size: 0.65rem;
+    }
+    .sds-card-body {
+      padding: 0.9rem 1rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .sds-card-body .product-name {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--navy);
+      line-height: 1.3;
+    }
+    .sds-card-body .product-meta {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+    .sds-card-footer {
+      padding: 0.65rem 1rem;
+      border-top: 1px solid var(--mid-gray);
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+    .btn-sds {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: var(--red);
+      color: var(--white);
+      border-radius: 5px;
+      padding: 0.45rem 0.85rem;
+      font-size: 0.8rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.18s;
+      text-decoration: none;
+    }
+    .btn-sds:hover { background: var(--red-dark); }
+    .btn-sds svg { width: 14px; height: 14px; fill: currentColor; }
+    .btn-sds-outline {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      border: 2px solid var(--navy);
+      color: var(--navy);
+      border-radius: 5px;
+      padding: 0.4rem 0.75rem;
+      font-size: 0.8rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.18s, color 0.18s;
+      text-decoration: none;
+    }
+    .btn-sds-outline:hover { background: var(--navy); color: var(--white); }
+
+    /* ── Hidden (search filter) ── */
+    .sds-card.hidden { display: none; }
+
+    /* ── No results ── */
+    #no-results {
+      display: none;
+      text-align: center;
+      padding: 2rem;
+      color: var(--text-muted);
+      font-size: 1rem;
+      grid-column: 1 / -1;
+    }
+
+    /* ── Footer ── */
+    footer {
+      background: var(--navy);
+      color: rgba(255,255,255,0.75);
+      text-align: center;
+      padding: 1.5rem 1rem;
+      font-size: 0.82rem;
+      margin-top: 2rem;
+    }
+    footer strong { color: var(--white); }
+    footer a { color: #adc4e8; }
+    footer a:hover { color: var(--white); }
+
+    /* ── Emergency banner ── */
+    .emergency-banner {
+      background: #fff3cd;
+      border: 2px solid #f0ad4e;
+      border-radius: 8px;
+      padding: 0.85rem 1.2rem;
+      margin-bottom: 1.8rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      font-size: 0.88rem;
+      color: #7a5200;
+    }
+    .emergency-banner .icon { font-size: 1.4rem; flex-shrink: 0; }
+    .emergency-banner strong { display: block; font-size: 0.95rem; margin-bottom: 0.2rem; }
+
+    /* ── Responsive ── */
+    @media (max-width: 600px) {
+      .hero h1 { font-size: 1.45rem; }
+      header { padding: 0.9rem 1rem; }
+      .header-title { font-size: 1.1rem; }
+      .stats { gap: 0.65rem; }
+      main { padding: 1.2rem 0.7rem 2rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Top utility bar -->
+<div class="topbar">
+  <span>📞 Emergency: <strong style="color:#fff">1-800-424-9300</strong> (CHEMTREC)</span>
+  <a href="mailto:safety@geigerbrothers.com">safety@geigerbrothers.com</a>
+</div>
+
+<!-- Header -->
+<header>
+  <div class="header-brand">
+    <div class="logo-box">
+      <span class="logo-top">Geiger</span>
+      <span class="logo-bottom">Brothers</span>
+    </div>
+    <div>
+      <div class="header-title">Safety Data Sheets</div>
+      <div class="header-subtitle">Field Reference · GHS/OSHA Compliant · Always Up to Date</div>
+    </div>
+  </div>
+</header>
+
+<!-- Hero / Search -->
+<div class="hero">
+  <h1>Find a Safety Data Sheet</h1>
+  <p>Search by product name, chemical, item number, or hazard category. All sheets are GHS‑formatted and OSHA HazCom 2012 compliant.</p>
+  <div class="search-wrap">
+    <input id="sds-search" type="search" placeholder="e.g. Screen Printing Ink, Solvent, Item #GB-1042…" autocomplete="off" />
+    <button class="search-btn" aria-label="Search">
+      <svg viewBox="0 0 24 24"><path d="M21 19l-5.197-5.197A7.5 7.5 0 1 0 4.5 12a7.5 7.5 0 0 0 10.303 1.803L21 19zm-9-8.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/></svg>
+    </button>
+  </div>
+</div>
+
+<!-- Main content -->
+<main>
+
+  <!-- Emergency notice -->
+  <div class="emergency-banner">
+    <span class="icon">⚠️</span>
+    <div>
+      <strong>Emergency / Spill Response</strong>
+      Call CHEMTREC 24/7: <strong>1-800-424-9300</strong>. Have the SDS and product name ready. Follow all PPE and first‑aid guidance listed on each sheet before handling chemicals.
+    </div>
+  </div>
+
+  <!-- Stats row -->
+  <div class="stats">
+    <div class="stat-card">
+      <div class="stat-num" id="total-count">18</div>
+      <div class="stat-label">Total SDS on file</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">6</div>
+      <div class="stat-label">Product categories</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">GHS</div>
+      <div class="stat-label">Format standard</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">2025</div>
+      <div class="stat-label">Last reviewed</div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════ -->
+  <!--  CATEGORY 1 – Inks & Colorants    -->
+  <!-- ══════════════════════════════════ -->
+  <div class="section-heading"><span class="dot"></span>Inks &amp; Colorants</div>
+  <div class="sds-grid">
+
+    <div class="sds-card" data-name="plastisol ink screen printing plastisol gb-ink-001">
+      <div class="sds-card-header">
+        Inks &amp; Colorants
+        <span class="badge">Hazardous</span>
+      </div>
+      <div class="sds-card-body">
+        <div class="product-name">Plastisol Screen Printing Ink</div>
+        <div class="product-meta">Item #GB-INK-001 · Rev. 03/2025</div>
+        <div class="product-meta">Contains PVC resin, plasticizer blend. Flash point: &gt;200 °F</div>
+      </div>
+      <div class="sds-card-footer">
+        <a class="btn-sds" href="sds/GB-INK-001.pdf" target="_blank">
+          <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm-1 1.5L18.5 9H13V3.5zM8 17h8v1.5H8V17zm0-3h8v1.5H8V14zm0-3h5v1.5H8V11z"/></svg>
+          View SDS (PDF)
+        </a>
+        <a class="btn-sds-outline" href="sds/GB-INK-001.pdf" download>⬇ Download</a>
+      </div>
+    </div>
+
+    <div class="sds-card" data-name="water-based ink screen printing water based gb-ink-002">
+      <div class="sds-card-header">
+        Inks &amp; Colorants
+        <span class="badge">Low Hazard</span>
+      </div>
+      <div class="sds-card-body">
+        <div class="product-name">Water-Based Screen Printing Ink</div>
+        <div class="product-meta">Item #GB-INK-002 · Rev. 01/2025</div>
+        <div class="product-meta">Acrylic dispersion, water-borne. Non-flammable.</div>
+      </div>
+      <div class="sds-card-footer">
+        <a class="btn-sds" href="sds/GB-INK-002.pdf" target="_blank">
+          <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm-1 1.5L18.5 9H13V3.5zM8 17h8v1.5H8V17zm0-3h8v1.5H8V14zm0-3h5v1.5H8V11z"/></svg>
+          View SDS (PDF)
+        </a>
+        <a class="btn-sds-outline" href="sds/GB-INK-002.pdf" download>⬇ Download</a>
+      </div>
+    </div>
+
+    <div class="sds-card" data-name="discharge ink printing discharge agent gb-ink-003">
+      <div class="sds-card-header">
+        Inks &amp; Colorants
+        <span class="badge">Hazardous</span>
+      </div>
+      <div class="sds-card-body">
+        <div class="product-name">Discharge Printing Ink / Activator</div>
+        <div class="product-meta">Item #GB-INK-003 · Rev. 02/2025</div>
+        <div class="product-meta">Contains formaldehyde-releasing agent. Requires PPE.</div>
+      </div>
+      <div class="sds-card-footer">
+        <a class="btn-sds" href="sds/GB-INK-003.pdf" target="_blank">
+          <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm-1 1.5L18.5 9H13V3.5zM8 17h8v1.5H8V17zm0-3h8v1.5H8V14zm0-3h5v1.5H8V11z"/></svg>
+          View SDS (PDF)
+        </a>
+        <a class="btn-sds-outline" href="sds/GB-INK-003.pdf" download>⬇ Download</a>
+      </div>
+    </div>
+
+  </div><!-- /sds-grid -->
+
+  <!-- ══════════════════════════════════ -->
+  <!--  CATEGORY 2 – Solvents & Cleaners -->
+  <!-- ══════════════════════════════════ -->
+  <div class="section-heading"><span class="dot"></span>Solvents &amp; Cleaners</div>
+  <div class="sds-grid">
+
+    <div class="sds-card" data-name="screen wash solvent cleaner press wash gb-sol-001">
+      <div class="sds-card-header">
+        Solvents &amp; Cleaners
+        <span class="badge">Flammable</span>
+      </div>
+      <div class="sds-card-body">
+        <div class="product-name">Screen Wash / Press Wash</div>
+        <div class="product-meta">Item #GB-SOL-001 · Rev. 04/2025</div>
+        <div class="product-meta">Petroleum distillates blend. Flash point: 105 °F</div>
+      </div>
+      <div class="sds-card-footer">
+        <a class="btn-sds" href="sds/GB-SOL-001.pdf" target="_blank">
+          <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm-1 1.5L18.5 9H13V3.5zM8 17h8v1.5H8V17zm0-3h8v1.5H8V14zm0-3h5v1.5H8V11z"/></svg>
+          View SDS (PDF)
+        </a>
+        <a class="btn-sds-outline" href="sds/GB-SOL-001.pdf" download>⬇ Download</a>
+      </div>
+    </div>
+
+    <div class="sds-card" data-name="emulsion remover screen cleaner photopolymer gb-sol-002">
+      <div class="sds-card-header">
+        Solvents &amp; Cleaners
+        <span class="badge">Corrosive</span>
+      </div>
+      <div class="sds-card-body">
+        <div class="product-name">Emulsion Remover / Reclaimer</div>
+        <div class="product-meta">Item #GB-SOL-002 · Rev. 02/2025</div>
+        <div class="product-meta">Sodium periodate solution. Oxidizer. Skin/eye irritant.</div>
+      </div>
+      <div class="sds-card-footer">
+        <a class="btn-sds" href="sds/GB-SOL-002.pdf" target="_blank">
+          <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm-1 1.5L18.5 9H13V3.5zM8 17h8v1.5H8V17zm0-3h8v1.5H8V14zm0-3h5v1.5H8V11z"/></svg>
+          View SDS (PDF)
+        </a>
+        <a class="btn-sds-outline" href="sds/GB-SOL-002.pdf" download>⬇ Download</a>
+      </div>
+    </div>
+
+    <div class="sds-card" data-name="general purpose cleaner degreaser gb-sol-003">
+      <div class="sds-card-header">
+        Solvents &amp; Cleaners
+        <span class="badge">Low Hazard</span>
+      </div>
+      <div class="sds-card-body">
+        <div class="product-name">General Purpose Degreaser</div>
+        <div class="product-meta">Item #GB-SOL-003 · Rev. 01/2025</div>
+        <div class="product-meta">Citrus-based surfactant. pH 8.5. Non-flammable.</div>
+      </div>
+      <div class="sds-card-footer">
+        <a class="btn-sds" href="sds/GB-SOL-003.pdf" target="_blank">
+          <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm-1 1.5L18.5 9H13V3.5zM8 17h8v1.5H8V17zm0-3h8v1.5H8V14zm0-3h5v1.5H8V11z"/></svg>
+          View SDS (PDF)
+        </a>
+        <a class="btn-sds-outline" href="sds/GB-SOL-003.pdf" download>⬇ Download</a>
+      </div>
+    </div>
+
+  </div><!-- /sds-grid -->
+
+  <!-- ══════════════════════════════════ -->
+  <!--  CATEGORY 3 – Adhesives           -->
+  <!-- ══════════════════════════════════ -->
+  <div class="section-heading"><span class="dot"></span>Adhesives &amp; Coatings</div>
+  <div class="sds-grid">
+
+    <div class="sds-card" data-name="pallet adhesive screen printing spray adhesive gb-adh-001">
+      <div class="sds-card-header">
+        Adhesives &amp; Coatings
+        <span class="badge">Flammable</span>
+      </div>
+      <div class="sds-card-body">
+        <div class="product-name">Screen Printing Pallet Adhesive Spray</div>
+        <div class="product-meta">Item #GB-ADH-001 · Rev. 03/2025</div>
+        <div class="product-meta">Aerosol. Flammable gas propellant. Flash point: −20 °F</div>
+      </div>
+      <div class="sds-card-footer">
+        <a class="btn-sds" href="sds/GB-ADH-001.pdf" target="_blank">
+          <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm-1 1.5L18.5 9H13V3.5zM8 17h8v1.5H8V17zm0-3h8v1.5H8V14zm0-3h5v1.5H8V11z"/></svg>
+          View SDS (PDF)
+        </a>
+        <a class="btn-sds-outline" href="sds/GB-ADH-001.pdf" download>⬇ Download</a>
+      </div>
+    </div>
+
+    <div class="sds-card" data-name="heat transfer adhesive vinyl hta coating gb-adh-002">
+      <div class="sds-card-header">
+        Adhesives &amp; Coatings
+        <span class="badge">Hazardous</span>
+      </div>
+      <div class="sds-card-body">
+        <div class="product-name">Heat Transfer Adhesive &amp; Vinyl Coating</div>
+        <div class="product-meta">Item #GB-ADH-002 · Rev. 02/2025</div>
+        <div class="product-meta">Polyurethane-based. Thermal decomposition hazard above 350 °F.</div>
+      </div>
+      <div class="sds-card-footer">
+        <a class="btn-sds" href="sds/GB-ADH-002.pdf" target="_blank">
+          <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm-1 1.5L18.5 9H13V3.5zM8 17h8v1.5H8V17zm0-3h8v1.5H8V14zm0-3h5v1.5H8V11z"/></svg>
+          View SDS (PDF)
+        </a>
+        <a class="btn-sds-outline" href="sds/GB-ADH-002.pdf" download>⬇ Download</a>
+      </div>
+    </div>
+
+    <div class="sds-card" data-name="uv curable coating uv varnish gb-adh-003">
+      <div class="sds-card-header">
+        Adhesives &amp; Coatings
+        <span class="badge">Hazardous</span>
+      </div>
+      <div class="sds-card-body">
+        <div class="product-name">UV-Curable Varnish / Overprint Coating</div>
+        <div class="product-meta">Item #GB-ADH-003 · Rev. 01/2025</div>
+        <div class="product-meta">Acrylate monomers. Skin sensitiser. Requires UV eye protection.</div>
+      </div>
+      <div class="sds-card-footer">
+        <a class="btn-sds" href="sds/GB-ADH-003.pdf" target="_blank">
+          <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm-1 1.5L18.5 9H13V3.5zM8 17h8v1.5H8V17zm0-3h8v1.5H8V14zm0-3h5v1.5H8V11z"/></svg>
+          View SDS (PDF)
+        </a>
+        <a class="btn-sds-outline" href="sds/GB-ADH-003.pdf" download>⬇ Download</a>
+      </div>
+    </div>
+
+  </div><!-- /sds-grid -->
+
+  <!-- ══════════════════════════════════ -->
+  <!--  CATEGORY 4 – Embroidery          -->
+  <!-- ══════════════════════════════════ -->
+  <div class="section-heading"><span class="dot"></span>Embroidery &amp; Thread Materials</div>
+  <div class="sds-grid">
+
+    <div class="sds-card" data-name="embroidery stabilizer backing material gb-emb-001">
+      <div class="sds-card-header">
+        Embroidery
+        <span class="badge">Low Hazard</span>
+      </div>
+      <div class="sds-card-body">
+        <div class="product-name">Cut-Away Embroidery Stabilizer / Backing</div>
+        <div class="product-meta">Item #GB-EMB-001 · Rev. 02/2025</div>
+        <div class="product-meta">Non-woven polypropylene fabric. Minimal hazard.</div>
+      </div>
+      <div class="sds-card-footer">
+        <a class="btn-sds" href="sds/GB-EMB-001.pdf" target="_blank">
+          <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm-1 1.5L18.5 9H13V3.5zM8 17h8v1.5H8V17zm0-3h8v1.5H8V14zm0-3h5v1.5H8V11z"/></svg>
+          View SDS (PDF)
+        </a>
+        <a class="btn-sds-outline" href="sds/GB-EMB-001.pdf" download>⬇ Download</a>
+      </div>
+    </div>
+
+    <div class="sds-card" data-name="embroidery topping water soluble film gb-emb-002">
+      <div class="sds-card-header">
+        Embroidery
+        <span class="badge">Low Hazard</span>
+      </div>
+      <div class="sds-card-body">
+        <div class="product-name">Water-Soluble Embroidery Topping Film</div>
+        <div class="product-meta">Item #GB-EMB-002 · Rev. 01/2025</div>
+        <div class="product-meta">Polyvinyl alcohol film. Water-soluble. Non-toxic.</div>
+      </div>
+      <div class="sds-card-footer">
+        <a class="btn-sds" href="sds/GB-EMB-002.pdf" target="_blank">
+          <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm-1 1.5L18.5 9H13V3.5zM8 17h8v1.5H8V17zm0-3h8v1.5H8V14zm0-3h5v1.5H8V11z"/></svg>
+          View SDS (PDF)
+        </a>
+        <a class="btn-sds-outline" href="sds/GB-EMB-002.pdf" download>⬇ Download</a>
+      </div>
+    </div>
+
+    <div class="sds-card" data-name="embroidery hoop adhesive spray tacking gb-emb-003">
+      <div class="sds-card-header">
+        Embroidery
+        <span class="badge">Flammable</span>
+      </div>
+      <div class="sds-card-body">
+        <div class="product-name">Embroidery Hoop Tacking / Adhesive Spray</div>
+        <div class="product-meta">Item #GB-EMB-003 · Rev. 03/2025</div>
+        <div class="product-meta">Aerosol contact adhesive. Flammable. Ventilate area.</div>
+      </div>
+      <div class="sds-card-footer">
+        <a class="btn-sds" href="sds/GB-EMB-003.pdf" target="_blank">
+          <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm-1 1.5L18.5 9H13V3.5zM8 17h8v1.5H8V17zm0-3h8v1.5H8V14zm0-3h5v1.5H8V11z"/></svg>
+          View SDS (PDF)
+        </a>
+        <a class="btn-sds-outline" href="sds/GB-EMB-003.pdf" download>⬇ Download</a>
+      </div>
+    </div>
+
+  </div><!-- /sds-grid -->
+
+  <!-- ══════════════════════════════════ -->
+  <!--  CATEGORY 5 – Laser / Engraving   -->
+  <!-- ══════════════════════════════════ -->
+  <div class="section-heading"><span class="dot"></span>Laser Engraving &amp; Marking</div>
+  <div class="sds-grid">
+
+    <div class="sds-card" data-name="laser marking spray cermark laserbond gb-las-001">
+      <div class="sds-card-header">
+        Laser &amp; Engraving
+        <span class="badge">Hazardous</span>
+      </div>
+      <div class="sds-card-body">
+        <div class="product-name">Laser Marking Spray (CerMark / LMM6000)</div>
+        <div class="product-meta">Item #GB-LAS-001 · Rev. 02/2025</div>
+        <div class="product-meta">Metal oxide suspension. Chromium VI after firing. Fume control required.</div>
+      </div>
+      <div class="sds-card-footer">
+        <a class="btn-sds" href="sds/GB-LAS-001.pdf" target="_blank">
+          <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm-1 1.5L18.5 9H13V3.5zM8 17h8v1.5H8V17zm0-3h8v1.5H8V14zm0-3h5v1.5H8V11z"/></svg>
+          View SDS (PDF)
+        </a>
+        <a class="btn-sds-outline" href="sds/GB-LAS-001.pdf" download>⬇ Download</a>
+      </div>
+    </div>
+
+    <div class="sds-card" data-name="rotary engraving lubricant cutting fluid gb-las-002">
+      <div class="sds-card-header">
+        Laser &amp; Engraving
+        <span class="badge">Low Hazard</span>
+      </div>
+      <div class="sds-card-body">
+        <div class="product-name">Rotary Engraving Cutting Lubricant</div>
+        <div class="product-meta">Item #GB-LAS-002 · Rev. 01/2025</div>
+        <div class="product-meta">Mineral oil based. Low inhalation risk. Mild skin irritant.</div>
+      </div>
+      <div class="sds-card-footer">
+        <a class="btn-sds" href="sds/GB-LAS-002.pdf" target="_blank">
+          <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm-1 1.5L18.5 9H13V3.5zM8 17h8v1.5H8V17zm0-3h8v1.5H8V14zm0-3h5v1.5H8V11z"/></svg>
+          View SDS (PDF)
+        </a>
+        <a class="btn-sds-outline" href="sds/GB-LAS-002.pdf" download>⬇ Download</a>
+      </div>
+    </div>
+
+    <div class="sds-card" data-name="sublimation dye ink transfer paper gb-las-003">
+      <div class="sds-card-header">
+        Laser &amp; Engraving
+        <span class="badge">Low Hazard</span>
+      </div>
+      <div class="sds-card-body">
+        <div class="product-name">Sublimation Dye Ink (Inkjet)</div>
+        <div class="product-meta">Item #GB-LAS-003 · Rev. 04/2025</div>
+        <div class="product-meta">Aqueous disperse dye solution. Non-flammable. Low acute toxicity.</div>
+      </div>
+      <div class="sds-card-footer">
+        <a class="btn-sds" href="sds/GB-LAS-003.pdf" target="_blank">
+          <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm-1 1.5L18.5 9H13V3.5zM8 17h8v1.5H8V17zm0-3h8v1.5H8V14zm0-3h5v1.5H8V11z"/></svg>
+          View SDS (PDF)
+        </a>
+        <a class="btn-sds-outline" href="sds/GB-LAS-003.pdf" download>⬇ Download</a>
+      </div>
+    </div>
+
+  </div><!-- /sds-grid -->
+
+  <!-- ══════════════════════════════════ -->
+  <!--  CATEGORY 6 – General Facility    -->
+  <!-- ══════════════════════════════════ -->
+  <div class="section-heading"><span class="dot"></span>General Facility &amp; Maintenance</div>
+  <div class="sds-grid">
+
+    <div class="sds-card" data-name="isopropyl alcohol ipa cleaning sanitation gb-fac-001">
+      <div class="sds-card-header">
+        Facility &amp; Maintenance
+        <span class="badge">Flammable</span>
+      </div>
+      <div class="sds-card-body">
+        <div class="product-name">Isopropyl Alcohol 70% / 99%</div>
+        <div class="product-meta">Item #GB-FAC-001 · Rev. 04/2025</div>
+        <div class="product-meta">Flammable liquid, Cat 2. Flash point: 53 °F (IPA 99%).</div>
+      </div>
+      <div class="sds-card-footer">
+        <a class="btn-sds" href="sds/GB-FAC-001.pdf" target="_blank">
+          <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm-1 1.5L18.5 9H13V3.5zM8 17h8v1.5H8V17zm0-3h8v1.5H8V14zm0-3h5v1.5H8V11z"/></svg>
+          View SDS (PDF)
+        </a>
+        <a class="btn-sds-outline" href="sds/GB-FAC-001.pdf" download>⬇ Download</a>
+      </div>
+    </div>
+
+    <div class="sds-card" data-name="machine oil lubricant maintenance press oil gb-fac-002">
+      <div class="sds-card-header">
+        Facility &amp; Maintenance
+        <span class="badge">Low Hazard</span>
+      </div>
+      <div class="sds-card-body">
+        <div class="product-name">Machine &amp; Press Lubricating Oil</div>
+        <div class="product-meta">Item #GB-FAC-002 · Rev. 02/2025</div>
+        <div class="product-meta">Mineral base oil, anti-wear additives. Flash point: 392 °F.</div>
+      </div>
+      <div class="sds-card-footer">
+        <a class="btn-sds" href="sds/GB-FAC-002.pdf" target="_blank">
+          <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm-1 1.5L18.5 9H13V3.5zM8 17h8v1.5H8V17zm0-3h8v1.5H8V14zm0-3h5v1.5H8V11z"/></svg>
+          View SDS (PDF)
+        </a>
+        <a class="btn-sds-outline" href="sds/GB-FAC-002.pdf" download>⬇ Download</a>
+      </div>
+    </div>
+
+    <div class="sds-card" data-name="compressed air duster aerosol electronics cleaning gb-fac-003">
+      <div class="sds-card-header">
+        Facility &amp; Maintenance
+        <span class="badge">Asphyxiant</span>
+      </div>
+      <div class="sds-card-body">
+        <div class="product-name">Compressed Air / Duster Aerosol</div>
+        <div class="product-meta">Item #GB-FAC-003 · Rev. 01/2025</div>
+        <div class="product-meta">HFC-134a propellant. Asphyxiant in confined spaces.</div>
+      </div>
+      <div class="sds-card-footer">
+        <a class="btn-sds" href="sds/GB-FAC-003.pdf" target="_blank">
+          <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm-1 1.5L18.5 9H13V3.5zM8 17h8v1.5H8V17zm0-3h8v1.5H8V14zm0-3h5v1.5H8V11z"/></svg>
+          View SDS (PDF)
+        </a>
+        <a class="btn-sds-outline" href="sds/GB-FAC-003.pdf" download>⬇ Download</a>
+      </div>
+    </div>
+
+  </div><!-- /sds-grid -->
+
+  <!-- No results message -->
+  <div id="no-results">
+    <p>😕 No SDS found matching your search. Try a different product name or item number.</p>
+    <p style="margin-top:.5rem;font-size:.85rem">Need help? Email <a href="mailto:safety@geigerbrothers.com">safety@geigerbrothers.com</a></p>
+  </div>
+
+</main>
+
+<!-- Footer -->
+<footer>
+  <p><strong>Geiger Brothers</strong> · Safety Data Sheet Library · GHS / OSHA HazCom 2012</p>
+  <p style="margin-top:0.5rem">
+    For emergencies call CHEMTREC: <strong>1-800-424-9300</strong> &nbsp;|&nbsp;
+    <a href="mailto:safety@geigerbrothers.com">safety@geigerbrothers.com</a>
+  </p>
+  <p style="margin-top:0.4rem;font-size:0.75rem;opacity:0.65">
+    © 2025 Geiger Brothers. All SDS documents are provided for informational purposes only.
+    Always follow your site-specific safety procedures.
+  </p>
+</footer>
+
+<!-- Search / filter script -->
+<script>
+  (function () {
+    const input = document.getElementById('sds-search');
+    const cards = document.querySelectorAll('.sds-card');
+    const noResults = document.getElementById('no-results');
+
+    function filterCards() {
+      const q = input.value.trim().toLowerCase();
+      let visible = 0;
+
+      cards.forEach(function (card) {
+        const text = (card.dataset.name || '') + ' ' + card.innerText.toLowerCase();
+        const match = !q || text.includes(q);
+        card.classList.toggle('hidden', !match);
+        if (match) visible++;
+      });
+
+      noResults.style.display = visible === 0 && q ? 'block' : 'none';
+
+      // Show/hide section headings when all cards in a grid are hidden
+      document.querySelectorAll('.sds-grid').forEach(function (grid) {
+        const heading = grid.previousElementSibling;
+        const anyVisible = Array.from(grid.querySelectorAll('.sds-card'))
+          .some(function (c) { return !c.classList.contains('hidden'); });
+        if (heading && heading.classList.contains('section-heading')) {
+          heading.style.display = anyVisible || !q ? '' : 'none';
+        }
+      });
+    }
+
+    input.addEventListener('input', filterCards);
+  })();
+</script>
+
+</body>
+</html>
